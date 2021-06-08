@@ -1,5 +1,18 @@
 
-CC=@CC@
+OS := $(shell uname -s)
+
+ifeq ($(OS),Darwin)
+ CC := gcc-10
+ CXX := g++-10
+else
+ ifeq ($(OS),Linux)
+  CC := gcc
+  CXX := g++
+ else
+  $(error Darwin/Linux only!)
+ endif
+endif
+
 CFLAGS=@CFLAGS@
 
 .c.o:
