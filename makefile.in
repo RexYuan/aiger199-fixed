@@ -41,7 +41,7 @@ wrapstim \
 
 TARGETS=$(OBJS) $(BINS)
 
-all: $(TARGETS)
+all: $(TARGETS) .gitignore
 
 install: install-bins # install-objs
 	test -d /usr
@@ -161,5 +161,13 @@ clean:
 	rm -f *.o 
 	rm -f $(TARGETS)
 	rm -f makefile
+	rm -f .gitignore
+
+.gitignore:
+	: > $@
+	for b in $(OBJS) $(BINS) $(addsuffix .o,$(BINS)) \
+	         aigfuzzlayers.o makefile .gitignore; do \
+	  echo $$b >> .gitignore; \
+	done
 
 .PHONY: all clean link install install-objs install-bins
